@@ -1,0 +1,39 @@
+{
+  "name": "grunt-of-ocamlbuild",
+  "description": "Compile OCaml code to JavaScript with ocamlbuild and js_of_ocaml",
+  "version": "0.0.1",
+  "homepage": "https://https://github.com/lemoineat",
+  "author": {
+    "name": "Lemoine Automation Technologes, Nicolas Relange",
+    "email": "nrelange@lemoinetechnologies.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lemoineat/grunt-of-ocamlbuild.git"
+  },
+  "bugs": {
+    "url": "https://https://github.com/lemoineat/grunt-of-ocamlbuild/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.2"
+  },
+  "keywords": [
+    "gruntplugin",
+    "ocaml",
+    "js-of-ocaml"
+  ],
+  "files": [
+    "tasks"
+  ],
+  "readmeFilename": "README.md",
+}
