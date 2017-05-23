@@ -34,7 +34,7 @@ grunt.loadNpmTasks('grunt-of-ocamlbuild');
 
 ## ocamlbuild task
 
-_Run this task with the `grunt ocamlbuild` command._
+_Run this task with the `grunt jsofocamlbuild` command._
 
 ### Options
 
@@ -53,7 +53,7 @@ Additional options to be passed to `js_of_ocaml`.
 ### Usage Examples
 
 ```js
-ocamlbuild: {
+jsofocamlbuild: {
   main: {
     files: {
       'lib/': 'ocaml/main.ml'

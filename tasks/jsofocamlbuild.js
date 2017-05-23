@@ -10,7 +10,7 @@ module.exports = function(grunt) {
 
   var path = require('path');
 
-  grunt.registerMultiTask('ocamlbuild', 'Copy OCaml code to JavaScript with ocamlbuild and js_of_ocaml', function() {
+  grunt.registerMultiTask('ofocamlbuild', 'Copy OCaml code to JavaScript with ocamlbuild and js_of_ocaml', function() {
     var done = this.async ();
 
     var options = this.options();
