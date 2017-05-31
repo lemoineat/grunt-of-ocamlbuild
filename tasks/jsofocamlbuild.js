@@ -22,8 +22,9 @@ module.exports = function(grunt) {
       var ocamlbuildDone = function (error, result, code) {
         grunt.verbose.writeln('ocamlbuild done');
         if (error) {
-          grunt.log.writeln (result);
-          grunt.fail.warn ('ocamlbuild error ' + error);
+          grunt.log.writeln (result.stdout);
+          grunt.log.error (result.stderr);
+          grunt.fail.warn ('ocamlbuild error');
         }
         else {
           grunt.verbose.ok('ocamlbuild successful');
@@ -45,8 +46,9 @@ module.exports = function(grunt) {
     var jsOfOCaml = function (jsPath, byteFile) {
       var jsOfOCamlDone = function (error, result, code) {
         if (error) {
-          grunt.log.writeln(result);
-          grunt.fail.warn ('js_of_ocaml error ' + error);
+          grunt.log.writeln (result.stdout);
+          grunt.log.error (result.stderr);
+          grunt.fail.warn ('js_of_ocaml error');
         }
         else {
           grunt.log.ok (jsPath + ' was successfully created');
