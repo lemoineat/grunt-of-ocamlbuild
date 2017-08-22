@@ -5,38 +5,40 @@
  * Licensed under the MIT license.
  */
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   'use strict';
 
   var path = require('path');
 
-  grunt.registerMultiTask('jsofocamlbuild', 'Copy OCaml code to JavaScript with ocamlbuild and js_of_ocaml', function() {
-    var done = this.async ();
+  grunt.registerMultiTask('jsofocamlbuild', 'Copy OCaml code to JavaScript with ocamlbuild and js_of_ocaml', function () {
+    var done = this.async();
 
     var options = this.options();
 
     var compile = function (jsFile, destination) {
-      var byteFile = jsFile.replace (/\.js$/, '.byte');
-      var jsPath = path.join (destination, jsFile);
+      var byteFile = jsFile.replace(/\.js$/, '.byte');
+      var jsPath = path.join(destination, jsFile);
+
+      grunt.file.mkdir(destination);
 
       var ocamlbuildDone = function (error, result, code) {
         grunt.verbose.writeln('ocamlbuild done');
         if (error) {
-          grunt.log.error ('ocamlbuild error:');
-          grunt.log.writeln (result.stdout);
-          grunt.log.writeln (result.stderr);
-          grunt.fail.warn ('ocamlbuild error');
+          grunt.log.error('ocamlbuild error:');
+          grunt.log.writeln(result.stdout);
+          grunt.log.writeln(result.stderr);
+          grunt.fail.warn('ocamlbuild error');
         }
         else {
           grunt.verbose.ok('ocamlbuild successful');
           grunt.verbose.writeln(result);
-          jsOfOCaml (jsPath, byteFile);
+          jsOfOCaml(jsPath, byteFile);
         }
       }
 
       grunt.verbose.writeln('Byte file is  ' + byteFile);
       grunt.log.writeln('Compiling ' + jsFile + ' into ' + destination);
-      var ocamlbuild_args = options.ocamlbuild.concat (['-use-ocamlfind', byteFile]);
+      var ocamlbuild_args = options.ocamlbuild.concat(['-use-ocamlfind', byteFile]);
       grunt.log.writeln('ocamlbuild ' + ocamlbuild_args.join(' '));
       grunt.util.spawn({
         cmd: 'ocamlbuild',
@@ -47,19 +49,19 @@ module.exports = function(grunt) {
     var jsOfOCaml = function (jsPath, byteFile) {
       var jsOfOCamlDone = function (error, result, code) {
         if (error) {
-          grunt.log.error ('js_of_ocaml error:');
-          grunt.log.writeln (result.stdout);
-          grunt.log.writeln (result.stderr);
-          grunt.fail.warn ('js_of_ocaml error');
+          grunt.log.error('js_of_ocaml error:');
+          grunt.log.writeln(result.stdout);
+          grunt.log.writeln(result.stderr);
+          grunt.fail.warn('js_of_ocaml error');
         }
         else {
-          grunt.log.ok (jsPath + ' was successfully created');
+          grunt.log.ok(jsPath + ' was successfully created');
           grunt.verbose.writeln(result);
-          done ();
+          done();
         }
       }
 
-      var js_of_ocaml_args = options.js_of_ocaml.concat (['-o', jsPath, byteFile]);
+      var js_of_ocaml_args = options.js_of_ocaml.concat(['-o', jsPath, byteFile]);
       grunt.log.writeln('js_of_ocaml ' + js_of_ocaml_args.join(' '));
       grunt.util.spawn({
         cmd: 'js_of_ocaml',
@@ -67,21 +69,21 @@ module.exports = function(grunt) {
       }, jsOfOCamlDone);
     }
 
-    this.files.forEach(function(f) {
+    this.files.forEach(function (f) {
       var destDirectory = f.dest;
-      var jsFiles = f.src.filter (function(filepath) { return true; })
-      
-      jsFiles.forEach (function (source) {
-        var jsFile = path.basename (source).replace (/\.ml$/, '.js');
+      var jsFiles = f.src.filter(function (filepath) { return true; })
+
+      jsFiles.forEach(function (source) {
+        var jsFile = path.basename(source).replace(/\.ml$/, '.js');
         grunt.verbose.writeln('Compile ' + jsFile + ' into ' + destDirectory);
-        compile (jsFile, destDirectory);
+        compile(jsFile, destDirectory);
       })
     });
 
   });
 
 
-  var unixifyPath = function(filepath) {
+  var unixifyPath = function (filepath) {
     if (process.platform === 'win32') {
       return filepath.replace(/\\/g, '/');
     } else {
